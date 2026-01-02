@@ -18,60 +18,99 @@ window.addEventListener("load", () => {
   });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+// document.addEventListener("DOMContentLoaded", function () {
+//   const dayElement = document.getElementById("day");
+//   const monthElement = document.getElementById("month");
+//   const yearElement = document.getElementById("year");
+//   const ageElement = document.getElementById("age");
+
+//   const months = [
+//     "January",
+//     "February",
+//     "March",
+//     "April",
+//     "May",
+//     "June",
+//     "July",
+//     "August",
+//     "September",
+//     "October",
+//     "November",
+//     "December",
+//   ];
+
+//   const targetDay = 3;
+//   const targetMonthIndex = 0; // january
+//   const targetYear = 2026;
+//   const birthYear = 2003;
+
+//   let currentDay = 1;
+//   let currentMonthIndex = 0;
+//   let currentYear = birthYear;
+//   let currentAge = 0;
+
+//   const interval = setInterval(() => {
+//     // Update day, month, year, and age in the DOM
+//     dayElement.textContent = currentDay;
+//     monthElement.textContent = months[currentMonthIndex];
+//     yearElement.textContent = currentYear;
+//     ageElement.textContent = currentAge;
+
+//     // Smoothly increment day, month, year, and age
+//     if (currentDay < targetDay) {
+//       currentDay++;
+//     } else if (currentMonthIndex < targetMonthIndex) {
+//       currentDay = targetDay; // Fix day
+//       currentMonthIndex++;
+//     } else if (currentYear < targetYear) {
+//       currentMonthIndex = targetMonthIndex; // Fix month
+//       currentYear++;
+//       currentAge++;
+//     } else {
+//       // Stop animation when target is reached
+//       clearInterval(interval);
+//     }
+//   }, 250); // Smoother speed adjustment
+// });
+
+
+// Birthday animation function
+const animateBirthday = () => {
   const dayElement = document.getElementById("day");
   const monthElement = document.getElementById("month");
   const yearElement = document.getElementById("year");
   const ageElement = document.getElementById("age");
 
   const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
   ];
 
-  const targetDay = 7;
-  const targetMonthIndex = 11; // December
-  const targetYear = 2024;
-  const birthYear = 2001;
-
   let currentDay = 1;
-  let currentMonthIndex = 0;
-  let currentYear = birthYear;
-  let currentAge = 0;
+  let currentYear = 2024;
+  let currentAge = 21;
+
+  // Set initial values
+  dayElement.textContent = currentDay;
+  monthElement.textContent = months[0];
+  yearElement.textContent = currentYear;
+  ageElement.textContent = currentAge;
 
   const interval = setInterval(() => {
-    // Update day, month, year, and age in the DOM
-    dayElement.textContent = currentDay;
-    monthElement.textContent = months[currentMonthIndex];
-    yearElement.textContent = currentYear;
-    ageElement.textContent = currentAge;
-
-    // Smoothly increment day, month, year, and age
-    if (currentDay < targetDay) {
+    if (currentDay < 3) {
       currentDay++;
-    } else if (currentMonthIndex < targetMonthIndex) {
-      currentDay = targetDay; // Fix day
-      currentMonthIndex++;
-    } else if (currentYear < targetYear) {
-      currentMonthIndex = targetMonthIndex; // Fix month
+      dayElement.textContent = currentDay;
+    } else if (currentYear < 2026) {
       currentYear++;
+      yearElement.textContent = currentYear;
+    } else if (currentAge < 23) {
       currentAge++;
+      ageElement.textContent = currentAge;
     } else {
-      // Stop animation when target is reached
       clearInterval(interval);
     }
-  }, 250); // Smoother speed adjustment
-});
+  }, 400);
+};
 
 // animation timeline
 const animationTimeline = () => {
@@ -137,6 +176,7 @@ const animationTimeline = () => {
       opacity: 0,
       y: 10,
     })
+    .call(animateBirthday) 
     .to(
       ".three",
       0.7,
@@ -318,6 +358,33 @@ const animationTimeline = () => {
       },
       "party"
     )
+    // .staggerTo(
+    //   ".eight svg",
+    //   1.5,
+    //   {
+    //     visibility: "visible",
+    //     opacity: 0,
+    //     scale: 80,
+    //     repeat: 3,
+    //     repeatDelay: 1.4,
+    //   },
+    //   0.3
+    // )
+    // .to(".six", 0.5, {
+    //   opacity: 0,
+    //   y: 30,
+    //   zIndex: "-1",
+    // })
+    // .staggerFrom(".nine p", 1, ideaTextTrans, 1.2)
+    // .to(
+    //   ".last-smile",
+    //   0.5,
+    //   {
+    //     rotation: 90,
+    //   },
+    //   "+=1"
+    // );
+
     .staggerTo(
       ".eight svg",
       1.5,
@@ -325,15 +392,55 @@ const animationTimeline = () => {
         visibility: "visible",
         opacity: 0,
         scale: 80,
-        repeat: 3,
+        repeat: 2,
         repeatDelay: 1.4,
       },
       0.3
     )
+    .to(".eight", 0.5, {
+      opacity: 0,
+      zIndex: "-1",
+    })
     .to(".six", 0.5, {
       opacity: 0,
       y: 30,
       zIndex: "-1",
+    })
+    .set(".nine-photos", {
+      visibility: "visible",
+      opacity: 1,
+      display: "flex"
+    })
+    .set(".together-text", {
+      opacity: 1
+    })
+    .fromTo(".together-text", 1, 
+      { y: -30, opacity: 0 },
+      { y: 0, opacity: 1 }
+    )
+    .staggerTo(
+      ".memory-photo",
+      0.6,
+      {
+        opacity: 1,
+        scale: 1,
+        rotation: 0,
+      },
+      0.3
+    )
+    .set(".together-text-2", {
+      opacity: 1
+    })
+    .fromTo(".together-text-2", 1,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1 }
+    )
+    .to(".nine-photos", 0.5, {
+      opacity: 0,
+    }, "+=3")
+    .set(".nine-photos", {
+      visibility: "hidden",
+      display: "none"
     })
     .staggerFrom(".nine p", 1, ideaTextTrans, 1.2)
     .to(
@@ -344,10 +451,18 @@ const animationTimeline = () => {
       },
       "+=1"
     );
-
-  // Restart Animation on click
+    // Restart Animation on click
   const replyBtn = document.getElementById("replay");
   replyBtn.addEventListener("click", () => {
-    tl.restart();
+    const song = document.querySelector(".song");
+    song.currentTime = 0; // Reset song to beginning
+    song.play(); // Play the song
+    tl.restart(); // Restart animation
   });
+
+  // // Restart Animation on click
+  // const replyBtn = document.getElementById("replay");
+  // replyBtn.addEventListener("click", () => {
+  //   tl.restart();
+  // });
 };
